@@ -1,9 +1,10 @@
-
+import React from "react";
+import { MovieUpload } from "./component/MovieUpload";
 
 function App() {
   return (
-    <div className="App">
-      
+    <div >
+      <MovieUpload/>
     </div>
   );
 }
