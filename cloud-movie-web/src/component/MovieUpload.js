@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-axios.defaults.maxBodyLength = Infinity;
-axios.defaults.maxContentLength = Infinity;
+
+
+axios.defaults.maxBodyLength = 60000000;
+axios.defaults.maxContentLength = 60000000;
+axios.defaults.timeout = 180000;
 
 // configuration for accessing S3
 const config = {
@@ -51,13 +54,13 @@ export function MovieUpload() {
 
     // configuration for sending base64 file to nodejs server
     const [file64, setFile] = useState();
-
+    const [oriFile, setOri] = useState();
     function settingImg(e) {
         console.log(e.target.files[0]);
         let { file } = state;
 
         file = e.target.files[0];
-        
+        setOri(e.target.files[0])
         // convert normal file to base64 file to upload
         getBase64(file)
             .then(result => {
@@ -75,23 +78,34 @@ export function MovieUpload() {
         
     }
 
+    const [up_stat, setUp] = useState("Pending");
+    const [progessPercent, setProgess] = useState();
     // posting image function using nodejs server
     async function postImg() {
 
         // package data for sending
         const formData = new FormData();
-        formData.append("filename", "movie-pic.jpeg")
-        formData.append("file", file64)
+        console.log(oriFile)
+        formData.append("upload-files", oriFile, oriFile.name);
         
+        const option = {
+            onUploadProgress: (progressEvent) => {
+                const {loaded, total} = progressEvent;
+                let percent = Math.floor((loaded / 100) / total);
+                setProgess(percent);
+                console.log(percent)
+            }
+        }
+
 
         // calling upload api
-        axios.post("http://localhost:9600/upload-img", formData)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        axios.post("https://7qnd9h1zea.execute-api.ap-southeast-1.amazonaws.com/files-upload/file-uploads", formData).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            setUp('Error')
+            console.log(err);
+        })
+
 
     }
 
@@ -100,21 +114,21 @@ export function MovieUpload() {
     // modify UI below
     return (
         <div>
-            <form onSubmit={postImg}>
-                <div>
-                    <span>Movie Name: </span>
-                    <input type="text" name="movieName" onChange={settingMovieInfor} placeholder="movie"></input>
-                </div>
-                <div>
-                    <span>Movie Background: </span>
-                    {/* // ***********  JPEG FILE ONLY *********** */}
-                    <input type="file" onChange={settingImg} ></input>
-                </div>
-                <button type="submit" > Upload Movie</button>
+            
+            <div>
+                <span>Movie Name: </span>
+                <input type="text" name="movieName" onChange={settingMovieInfor} placeholder="movie"></input>
+            </div>
+            <div>
+                <span>Movie Background: </span>
+                {/* // ***********  JPEG FILE ONLY *********** */}
+                <input type="file" onChange={settingImg} ></input>
+            </div>
+            <button onClick={postImg}> Upload Movie</button>
                 
-            </form>
-            
-            
+           
+            <h1>{up_stat}</h1>
+            <h2>{progessPercent}</h2>
         </div>
     )
 }
