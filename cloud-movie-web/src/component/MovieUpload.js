@@ -86,9 +86,12 @@ export function MovieUpload() {
         // package data for sending
         const formData = new FormData();
         console.log(oriFile)
-        formData.append("upload-files", oriFile, oriFile.name);
+        formData.append("testing-pic.jpeg", file64);
         
         const option = {
+            headers: {
+
+            },
             onUploadProgress: (progressEvent) => {
                 const {loaded, total} = progressEvent;
                 let percent = Math.floor((loaded / 100) / total);
@@ -114,7 +117,6 @@ export function MovieUpload() {
     // modify UI below
     return (
         <div>
-            
             <div>
                 <span>Movie Name: </span>
                 <input type="text" name="movieName" onChange={settingMovieInfor} placeholder="movie"></input>
