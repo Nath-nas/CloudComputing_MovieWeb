@@ -1,5 +1,6 @@
 import React, { useState, useContext} from "react";
 import { AccountContext } from "./Account";
+import {Link} from 'react-router-dom';
 import UserPool from "./UserPool";
 import { CognitoUser, AuthenticationDetails} from "amazon-cognito-identity-js";
 
@@ -22,7 +23,7 @@ export function SignIn() {
 
     return (
         <div> 
-            <h1> Sign In Form</h1>
+            <h1> Sign In</h1>
             <form onSubmit={onSubmit}>
             <div>
                 <label htmlFor="email">Email</label>
@@ -33,8 +34,8 @@ export function SignIn() {
                 <label htmlFor="password">Password</label>
                 <input value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
             </div>
-
-            <button type="submit"> Sign In</button>
+            <button class="submitBtn" type="submit">Sign In </button>
+            <Link class="signUpLink" to={"/signUp"}><span>Sign Up </span></Link>
             </form>
         </div>
     )

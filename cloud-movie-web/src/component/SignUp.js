@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UserPool from "./UserPool";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 
-export function SignUp() {
+export function SignUpForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -30,8 +30,8 @@ export function SignUp() {
     }
 
     return (
-        <div> 
-            <h1> Registration Form</h1>
+        <div class="loginBox"> 
+            <h1> Registration</h1>
             <form onSubmit={onSubmit}>
             <div>
                 <label htmlFor="email">Email</label>
@@ -43,8 +43,19 @@ export function SignUp() {
                 <input value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
             </div>
 
-            <button type="submit"> Sign Up</button>
+            <button class="submitBtn" type="submit"> Sign Up</button>
             </form>
         </div>
     )
 }
+
+
+const SignUp = () => {
+  return (
+    <div>
+      <SignUpForm/>
+    </div>
+  )
+}
+
+export default SignUp

@@ -26,7 +26,7 @@ export function Status() {
     function verifyPage() {
         return (
             <div>
-                {status ? (adminPage) : "Please sign in" }
+                {status ? (adminPage) : "" }
             </div>
         )
     }
@@ -48,7 +48,7 @@ export function Status() {
             {status ? (<div>
                 <h3>{isAdmin ? "You are admin " : "You are user"}</h3>
                 <button onClick={logOut}>Log Out</button>
-            </div>) : "Please sign in"}
+            </div>) : null}
             
         </div>
     )
