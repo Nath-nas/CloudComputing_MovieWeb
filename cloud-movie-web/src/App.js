@@ -7,12 +7,13 @@ import {Status} from "./component/Status"
 
 function App() {
   return (
-    <Account >
-      <Status/>
-      <SignUp/>
-      <br></br>
-      <SignIn/>
-    </Account>
+    // <Account >
+    //   <Status/>
+    //   <SignUp/>
+    //   <br></br>
+    //   <SignIn/>
+    // </Account>
+    <MovieUpload/>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 
@@ -16,12 +16,12 @@ const config = {
 }
 
 export function MovieUpload() {
-    var movie;
+    const [movie, setMovie] = useState("");
 
     // storing movie information => upload to dynamoDB
     function settingMovieInfor(e) {
-        movie = e.target.value
-        console.log(e.target.value)
+        
+        setMovie(e.target.value)
     }
 
 
@@ -102,6 +102,7 @@ export function MovieUpload() {
 
 
         // calling upload api
+        // Upload image to s3
         axios.post("https://7qnd9h1zea.execute-api.ap-southeast-1.amazonaws.com/files-upload/file-uploads", formData).then((res) => {
             console.log(res)
         }).catch((err) => {
@@ -109,10 +110,31 @@ export function MovieUpload() {
             console.log(err);
         })
 
+        
+
+        // update movie to dynamoDB
+        // build algorithm to generate movie_id
+        axios.post('https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo', {
+            movie_id: '6',
+            title: movie,
+            genre: "Action"
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err)
+        })
 
     }
 
-    
+    useEffect(() => {
+
+        // get movie from dynamoDB
+        axios.get('https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo').then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err)
+        })
+    })
 
     // modify UI below
     return (

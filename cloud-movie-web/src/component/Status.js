@@ -5,7 +5,7 @@ import { AccountContext } from "./Account";
 
 export function Status() {
     const [status, setStatus] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState();
     const { getSession, logOut, getRole} = useContext(AccountContext);
 
     useEffect(() => {

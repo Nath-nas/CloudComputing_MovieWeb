@@ -13,10 +13,21 @@ export function SignUp() {
 
         const usRole = {
             Name: "custom:role",
-            Value: "Admin"
+            Value: "User"
+        }
+
+        const nickname = {
+            Name: 'custom:us_name',
+            Value: 'Phuc0906'
+        }
+
+        const phonenumber = {
+            Name: "custom:phone_number",
+            Value: "0917600202"
         }
 
         attributesList.push(new CognitoUserAttribute(usRole));
+        attributesList.push(new CognitoUserAttribute(nickname));
 
         console.log(email)
         UserPool.signUp(email, password, attributesList, null, (err, data) => {
