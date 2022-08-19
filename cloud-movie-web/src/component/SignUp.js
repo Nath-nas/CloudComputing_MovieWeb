@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import UserPool from "./UserPool";
+import {Link} from "react-router-dom";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 
 export function SignUpForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const onSubmit = (e) => {
-        e.preventDefault();
+    const onSubmit = () => {
+        
 
         var attributesList = [];
 
@@ -31,20 +32,20 @@ export function SignUpForm() {
 
     return (
         <div class="loginBox"> 
-            <h1> Registration</h1>
-            <form onSubmit={onSubmit}>
+            <h1 class="announcementLabel"> Registration</h1>
+            
             <div>
-                <label htmlFor="email">Email</label>
+                <label class="formLabel" htmlFor="email">Email</label>
                 <input value={email} onChange={(e) => {setEmail(e.target.value)}}></input>
             </div>
             
             <div>
-                <label htmlFor="password">Password</label>
+                <label class="formLabel" htmlFor="password">Password</label>
                 <input value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
             </div>
 
-            <button class="submitBtn" type="submit"> Sign Up</button>
-            </form>
+            <Link class="signUpLink" onClick={onSubmit} to={"/finishedSignUp"}><span>Sign Up </span></Link>
+            
         </div>
     )
 }

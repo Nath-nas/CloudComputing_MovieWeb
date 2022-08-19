@@ -23,15 +23,15 @@ export function SignIn() {
 
     return (
         <div> 
-            <h1> Sign In</h1>
+            <h1 class="announcementLabel"> Sign In</h1>
             <form onSubmit={onSubmit}>
             <div>
-                <label htmlFor="email">Email</label>
+                <label class="formLabel" htmlFor="email">Email</label>
                 <input value={email} onChange={(e) => {setEmail(e.target.value)}}></input>
             </div>
             
             <div>
-                <label htmlFor="password">Password</label>
+                <label class="formLabel"  htmlFor="password">Password</label>
                 <input value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
             </div>
             <button class="submitBtn" type="submit">Sign In </button>

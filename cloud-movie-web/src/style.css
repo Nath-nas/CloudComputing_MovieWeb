@@ -7,7 +7,7 @@ body{
     font-family: sans-serif;
 }
 
-label{
+.formLabel{
     color: #000000;
     font-weight: bold;
     display: block;
@@ -15,6 +15,14 @@ label{
     float: left;
     padding:10px;
     margin:10px 0; 
+}
+
+.announcementLabel{
+    color: #000000;
+    font-weight: bold;
+    font-size: 600;
+    padding:0px 10px 0px 10px;
+    text-align: center;
 }
 
 input{
@@ -29,10 +37,23 @@ input{
 .loginBox{
     width: fit-content;
     height: 100%;
-    background:#ff0033;
+    background:#ff0000;
     color: rgb(0, 0, 0);
     top: 50%;
     left: 75%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+}
+
+.annoucement{
+    width: fit-content;
+    height: fit-content;
+    border-radius:10px;
+    background:#ff0000;
+    color: rgb(0, 0, 0);
+    top: 30%;
+    left: 50%;
     position: absolute;
     transform: translate(-50%,-50%);
     box-sizing: border-box;
@@ -106,7 +127,3 @@ input{
     background-color:#ffffff;
     color:rgb(0, 0, 0);
 }
-
-h1{
-    text-align: center;
- }

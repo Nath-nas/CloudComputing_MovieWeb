@@ -1,5 +1,4 @@
 import React from 'react'
-import {SignUp} from "./SignUp"
 import {SignIn} from "./SignIn"
 import {Account} from "./Account"
 import {Status} from "./Status"
