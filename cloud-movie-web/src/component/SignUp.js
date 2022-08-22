@@ -55,7 +55,7 @@ export function SignUpForm(){
             <div>
                 <label class="formLabel" htmlFor="password">Password</label>
                 <input value={password}  required type={showPassword? "text":"password"} onChange={(e) => {setPassword(e.target.value)}}></input>
-                <button onClick={() => setShow(!showPassword)}>Show/Hide</button>
+                <button className="view-img" onClick={() => setShow(!showPassword)}><i className={showPassword ? "bi bi-eye-fill" : "bi bi-eye-slash-fill"}></i></button>
             </div>
             
             <Link class="signUpLink" onClick={onSubmit} to={"/finishedSignUp"}><span>Sign Up </span></Link>
