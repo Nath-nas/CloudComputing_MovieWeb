@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import UserPool from "./UserPool";
 import {Link} from "react-router-dom";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 
-export function SignUpForm() {
+export function SignUpForm(){
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    
+    const [showPassword, setShow] = useState(false);
+
 
     const onSubmit = () => {
-        
-
         var attributesList = [];
 
         const usRole = {
@@ -31,22 +34,32 @@ export function SignUpForm() {
     }
 
     return (
-        <div class="loginBox"> 
+        <form class="loginBox"> 
             <h1 class="announcementLabel"> Registration</h1>
+
+            <div>
+                <label class="formLabel" htmlFor="name">Name</label>
+                <input value={name} required onChange={(e) => {setName(e.target.value)}}></input>
+            </div>
+
+            <div>
+                <label class="formLabel" htmlFor="phoneNumber">Phone Number</label>
+                <input type="number" value={phoneNumber} onChange={(e) => {setPhoneNumber(e.target.value)}}></input>
+            </div>
             
             <div>
                 <label class="formLabel" htmlFor="email">Email</label>
-                <input value={email} onChange={(e) => {setEmail(e.target.value)}}></input>
+                <input value={email} required onChange={(e) => {setEmail(e.target.value)}}></input>
             </div>
             
             <div>
                 <label class="formLabel" htmlFor="password">Password</label>
-                <input value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
+                <input value={password}  required type={showPassword? "text":"password"} onChange={(e) => {setPassword(e.target.value)}}></input>
+                <button onClick={() => setShow(!showPassword)}>Show/Hide</button>
             </div>
-
-            <Link class="signUpLink" onClick={onSubmit} to={"/finishedSignUp"}><span>Sign Up </span></Link>
             
-        </div>
+            <Link class="signUpLink" onClick={onSubmit} to={"/finishedSignUp"}><span>Sign Up </span></Link>
+        </form>
     )
 }
 
