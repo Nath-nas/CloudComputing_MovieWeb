@@ -127,3 +127,8 @@ input{
     background-color:#ffffff;
     color:rgb(0, 0, 0);
 }
+
+.view-img {
+    background-color: transparent;
+    border: 0px;
+}

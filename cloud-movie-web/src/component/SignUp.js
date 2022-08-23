@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import UserPool from "./UserPool";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 
 export function SignUpForm(){
@@ -10,7 +10,7 @@ export function SignUpForm(){
     const [phoneNumber, setPhoneNumber] = useState("");
     
     const [showPassword, setShow] = useState(false);
-
+    const navigate = useNavigate();
 
     const onSubmit = () => {
         var attributesList = [];
@@ -31,6 +31,10 @@ export function SignUpForm(){
                 console.log(data);
             }
         })
+
+        if(email != "" && (password.indexOf("@") !== -1) && name != "") {
+            navigate("/finishedSignUp");
+        } 
     }
 
     return (
@@ -55,14 +59,13 @@ export function SignUpForm(){
             <div>
                 <label class="formLabel" htmlFor="password">Password</label>
                 <input value={password}  required type={showPassword? "text":"password"} onChange={(e) => {setPassword(e.target.value)}}></input>
-                <button onClick={() => setShow(!showPassword)}>Show/Hide</button>
+                <button type="button" className="view-img" onClick={() => setShow(!showPassword)}><i className={showPassword ? "bi bi-eye-fill" : "bi bi-eye-slash-fill"}></i></button>
             </div>
             
-            <Link class="signUpLink" onClick={onSubmit} to={"/finishedSignUp"}><span>Sign Up </span></Link>
+            <button type="submit" class="signUpLink" onClick={()=>onSubmit()} to={"/finishedSignUp"}><span>Sign Up</span></button>
         </form>
     )
 }
-
 
 const SignUp = () => {
   return (
