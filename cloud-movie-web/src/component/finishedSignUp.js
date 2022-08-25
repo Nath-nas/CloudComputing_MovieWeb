@@ -8,8 +8,7 @@ const FinishedSignUp = () => {
     <div class="annoucement">
       <h1 class="announcementLabel">Thank you for creating an account.</h1>
       <div></div>
-      <h1 class="announcementLabel">Please check you email to get verification code.</h1>
-      <input></input>
+      <h1 class="announcementLabel">Please check you email to finish signing up.</h1>
       <br></br>
       <Link class="signUpLink" to={"/"}><span>Home</span></Link>
     </div>

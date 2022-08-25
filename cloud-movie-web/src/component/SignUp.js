@@ -17,22 +17,19 @@ export function SignUpForm(){
 
         const usRole = {
             Name: "custom:role",
-            Value: "Admin"
+            Value: "User"
         }
 
         attributesList.push(new CognitoUserAttribute(usRole));
-
-        console.log(email)
-        UserPool.signUp(email, password, attributesList, null, (err, data) => {
-            if (err) {
-                console.log(err);
-
-            }else {
-                console.log(data);
-            }
-        })
-
-        if(email != "" && (password.indexOf("@") !== -1) && name != "") {
+        
+        if(email.indexOf("@") !== -1 && password !== "" && name !== "") {
+            UserPool.signUp(email, password, attributesList, null, (err, data) => {
+                if (err) {
+                    console.log(err);
+                }else {
+                    console.log(data);
+                }
+            })
             navigate("/finishedSignUp");
         } 
     }
