@@ -26,10 +26,7 @@ function Account(props) {
     const logOut = () => {
         const user = UserPool.getCurrentUser();
         if (user) {
-            
             user.signOut();
-            
-            
         }
     }
 
