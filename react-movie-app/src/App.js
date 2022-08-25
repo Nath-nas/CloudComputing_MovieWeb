@@ -1,6 +1,9 @@
 import React, { Fragment } from "react";
 import { Route, Routes } from "react-router-dom";
 import "swiper/scss";
+import LogIn from './components/auth/LogIn';
+import SignUp from './components/auth/SignUp';
+import FinishedSignUp from './components/auth/finishedSignUp';
 import Banner from "./components/banner/Banner";
 import Main from "./components/layout/Main";
 import HomePage from "./pages/HomePage";
@@ -11,6 +14,9 @@ const App = () => {
     return (
         <Fragment>
             <Routes>
+                <Route path="/login" element={<LogIn/>}/>
+                <Route path="/signUp" element={<SignUp/>}/>
+                <Route path="/finishedSignUp" element={<FinishedSignUp/>}/>
                 <Route element={<Main></Main>}>
                     <Route
                         path="/"

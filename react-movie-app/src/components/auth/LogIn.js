@@ -2,7 +2,6 @@ import React from 'react'
 import {SignIn} from "./SignIn"
 import {Account} from "./Account"
 import {Status} from "./Status"
-import '../style.css';
 
 const LogIn = () => {
   return (
