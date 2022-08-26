@@ -19,12 +19,12 @@ async function uploadToLocalFolder(imgLink, name) {
 
 async function downloadImg(url, name) {
     axios.get('https://api.themoviedb.org/3/movie/popular?api_key=5615039fc008ff1530efcac688082638&language=en-US&page=1').then(res => {
-        // console.log(res.data.results)
+        console.log(res.data.results)
 
-        for (let i = 0; i < res.data.results.length; i++) {
-            // console.log(res.data.results[i].original_title.replace(/\s/g, ''))
-            uploadToLocalFolder(res.data.results[i].poster_path, res.data.results[i].original_title.replace(/\s/g, ''));
-        }
+        // for (let i = 0; i < res.data.results.length; i++) {
+        //     // console.log(res.data.results[i].original_title.replace(/\s/g, ''))
+        //     uploadToLocalFolder(res.data.results[i].poster_path, res.data.results[i].original_title.replace(/\s/g, ''));
+        // }
     })
 
     

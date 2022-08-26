@@ -7,12 +7,20 @@ axios.defaults.maxBodyLength = 60000000;
 axios.defaults.maxContentLength = 60000000;
 axios.defaults.timeout = 180000;
 
+// configuration for accessing S3
+const config = {
+    bucketName: 'movie-storing',
+    region: 'ap-southeast-1',
+    accessKeyId: 'AKIAXIAIX4DZTFJJQW64',
+    secretAccessKey: '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'
+}
 
 export function MovieUpload() {
     const [newId, setNewId] = useState("");
     const [releaseDate, setReleaseDate] = useState("");
     const [voteAverage, setVoteAverage] = useState("");
     const [movieName, setMovieName] = useState("");
+    const [overview, setOverview] = useState("")
     
 
 
@@ -148,8 +156,8 @@ export function MovieUpload() {
             title: movieName,
             release_date: releaseDate,
             vote_average: voteAverage,
-            backdrop_path: movieName.replace(/\s/g, '') + "_backdrop_path.jpeg",
-            poster_path: movieName.replace(/\s/g, '') + "_poster_path.jpeg",
+            backdrop_path: newId + "_backdrop_path.jpeg",
+            poster_path: newId + "_poster_path.jpeg",
             genre: ["Action", "Horror"]
         }).then(res => {
             console.log(res);
@@ -184,6 +192,11 @@ export function MovieUpload() {
             <div>
                 <span>Movie Name: </span>
                 <input style={{color: "black"}} type="text" name="movieName" onChange={e => setMovieName(e.target.value)} placeholder="movie"></input>
+            </div>
+
+            <div>
+                <span>Overview: </span>
+                <input style={{color: "black"}} type="text" name="movieName" onChange={e => setOverview(e.target.value)} placeholder="overview"></input>
             </div>
 
             <div>
