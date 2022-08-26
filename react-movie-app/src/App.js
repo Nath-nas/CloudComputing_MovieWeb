@@ -9,11 +9,13 @@ import Main from "./components/layout/Main";
 import HomePage from "./pages/HomePage";
 import MovieDetailPage from "./pages/MovieDetailPage";
 import MoviePage from "./pages/MoviePage";
+import { MovieUpload } from "./components/auth/MovieUpload";
 //https://api.themoviedb.org/3/movie/now_playing?api_key=<<744d8cc0b08621bc75b1dbffe80f9214>>&language=en-US&page=1
 const App = () => {
     return (
         <Fragment>
             <Routes>
+                <Route path="/upload" element={<MovieUpload/>}/>
                 <Route path="/login" element={<LogIn/>}/>
                 <Route path="/signUp" element={<SignUp/>}/>
                 <Route path="/finishedSignUp" element={<FinishedSignUp/>}/>

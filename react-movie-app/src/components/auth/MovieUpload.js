@@ -7,22 +7,13 @@ axios.defaults.maxBodyLength = 60000000;
 axios.defaults.maxContentLength = 60000000;
 axios.defaults.timeout = 180000;
 
-// configuration for accessing S3
-const config = {
-    bucketName: 'movie-storing',
-    region: 'ap-southeast-1',
-    accessKeyId: 'AKIAXIAIX4DZTFJJQW64',
-    secretAccessKey: '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'
-}
 
 export function MovieUpload() {
-    const [movie, setMovie] = useState("");
-
-    // storing movie information => upload to dynamoDB
-    function settingMovieInfor(e) {
-        
-        setMovie(e.target.value)
-    }
+    const [newId, setNewId] = useState("");
+    const [releaseDate, setReleaseDate] = useState("");
+    const [voteAverage, setVoteAverage] = useState("");
+    const [movieName, setMovieName] = useState("");
+    
 
 
     var state = {
@@ -52,21 +43,22 @@ export function MovieUpload() {
         });
     };
 
-    // configuration for sending base64 file to nodejs server
-    const [file64, setFile] = useState();
-    const [oriFile, setOri] = useState();
-    function settingImg(e) {
+    
+    
+
+    const [backdropPath, setbackdropPath] = useState("")
+    function upadteBackdropPath(e) {
         console.log(e.target.files[0]);
         let { file } = state;
 
         file = e.target.files[0];
-        setOri(e.target.files[0])
+        
         // convert normal file to base64 file to upload
         getBase64(file)
             .then(result => {
                 file["base64"] = result;
                 // console.log("File Is", file);
-                setFile(result);
+                setbackdropPath(result);
                 console.log("file lenght: " + result.length)
             })
             .catch(err => {
@@ -78,15 +70,44 @@ export function MovieUpload() {
         
     }
 
+    const [posterPath, setposterPath] = useState("")
+    function updatePosterPath(e) {
+        console.log(e.target.files[0]);
+        let { file } = state;
+
+        file = e.target.files[0];
+        
+        // convert normal file to base64 file to upload
+        getBase64(file)
+            .then(result => {
+                file["base64"] = result;
+                // console.log("File Is", file);
+                setposterPath(result);
+                console.log("file lenght: " + result.length)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        
+
+        
+    }
+
+
+
     const [up_stat, setUp] = useState("Pending");
     const [progessPercent, setProgess] = useState();
     // posting image function using nodejs server
     async function postImg() {
 
         // package data for sending
-        const formData = new FormData();
-        console.log(oriFile)
-        formData.append(id + ".jpeg", file64);
+        const backdropData = new FormData();
+       
+        backdropData.append(newId + "_backdrop_path.jpeg", backdropPath);
+
+        const posterData = new FormData();
+        posterData.append(newId + "_poster_path.jpeg", posterPath);
         
         const option = {
             headers: {
@@ -104,7 +125,14 @@ export function MovieUpload() {
 
         // calling upload api
         // Upload image to s3
-        axios.post("https://7qnd9h1zea.execute-api.ap-southeast-1.amazonaws.com/files-upload/file-uploads", formData).then((res) => {
+        axios.post("https://7qnd9h1zea.execute-api.ap-southeast-1.amazonaws.com/files-upload/file-uploads", backdropData).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            setUp('Error')
+            console.log(err);
+        })
+
+        axios.post("https://7qnd9h1zea.execute-api.ap-southeast-1.amazonaws.com/files-upload/file-uploads", posterData).then((res) => {
             console.log(res)
         }).catch((err) => {
             setUp('Error')
@@ -116,10 +144,13 @@ export function MovieUpload() {
         // update movie to dynamoDB
         // build algorithm to generate movie_id
         axios.post('https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo', {
-            movie_id: '6',
-            title: movie,
-            genre: "Action"
-            
+            id: String(newId),
+            title: movieName,
+            release_date: releaseDate,
+            vote_average: voteAverage,
+            backdrop_path: movieName.replace(/\s/g, '') + "_backdrop_path.jpeg",
+            poster_path: movieName.replace(/\s/g, '') + "_poster_path.jpeg",
+            genre: ["Action", "Horror"]
         }).then(res => {
             console.log(res);
         }).catch(err => {
@@ -131,11 +162,13 @@ export function MovieUpload() {
     
     
 
+    // fix debouncing
     useEffect(() => {
 
         // get movie from dynamoDB
         axios.get('https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/getnewid').then(res => {
             console.log(res);
+            setNewId(res.data.newId);
         }).catch(err => {
             console.log(err)
         })
@@ -146,16 +179,33 @@ export function MovieUpload() {
         <div>
             <div>
                 <span>Movie Id: </span>
-                <input type="text" name="movieName" onChange={settingMovieInfor} placeholder="id" ></input>
+                <input style={{color: "black"}} type="text" name="movieName" placeholder="id" value={newId}></input>
             </div>
             <div>
                 <span>Movie Name: </span>
-                <input type="text" name="movieName" onChange={settingMovieInfor} placeholder="movie"></input>
+                <input style={{color: "black"}} type="text" name="movieName" onChange={e => setMovieName(e.target.value)} placeholder="movie"></input>
             </div>
+
             <div>
-                <span>Movie Background: </span>
+                <span>Release Date: </span>
+                <input style={{color: "black"}} type="text" name="movieName" onChange={e => setReleaseDate(e.target.value)} placeholder="release date"></input>
+            </div>
+
+            <div>
+                <span>Vote Average: </span>
+                <input style={{color: "black"}} type="text" name="movieName" onChange={e => setVoteAverage(e.target.value)} placeholder="vote average"></input>
+            </div>
+
+            <div>
+                <span>Movie Poster: </span>
                 {/* // ***********  JPEG FILE ONLY *********** */}
-                <input type="file" onChange={settingImg} ></input>
+                <input type="file" onChange={updatePosterPath} ></input>
+            </div>
+
+            <div>
+                <span>Movie Backgrop: </span>
+                {/* // ***********  JPEG FILE ONLY *********** */}
+                <input type="file" onChange={upadteBackdropPath} ></input>
             </div>
             <button onClick={postImg}> Upload Movie</button>
                 
