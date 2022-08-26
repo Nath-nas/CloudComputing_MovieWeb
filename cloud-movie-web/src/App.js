@@ -1,19 +1,21 @@
 import React from "react";
-import { MovieUpload } from "./component/MovieUpload";
-import {SignUp} from "./component/SignUp"
-import {SignIn} from "./component/SignIn"
-import {Account} from "./component/Account"
-import {Status} from "./component/Status"
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Home from "./component/Home";
+import LogIn from "./component/LogIn";
+import SignUp from "./component/SignUp";
+import FinishedSignUp from "./component/finishedSignUp";
 
 function App() {
   return (
-    // <Account >
-    //   <Status/>
-    //   <SignUp/>
-    //   <br></br>
-    //   <SignIn/>
-    // </Account>
-    <MovieUpload/>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LogIn/>}/>
+          <Route path="/signUp" element={<SignUp/>}/>
+          <Route path="/finishedSignUp" element={<FinishedSignUp/>}/>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
