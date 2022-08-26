@@ -9,7 +9,7 @@ const MoviePage = () => {
     const queryDebounce = useDebounce(query, 500);
     const [nextPage, setNextPage] = useState(1);
     const [url, setUrl] = useState(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&page=${nextPage}`
+        `https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo`
     );
     const handleChange = (e) => {
         setQuery(e.target.value);
@@ -17,19 +17,19 @@ const MoviePage = () => {
     useEffect(() => {
         if (queryDebounce) {
             setUrl(
-                `https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${queryDebounce}&page=${nextPage}`
+                `https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/search?searchMov=${queryDebounce}`
             );
         } else {
             setUrl(
-                `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&page=${nextPage}`
+                `https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo`
             );
         }
     }, [queryDebounce, nextPage]);
     const { data, error } = useSWR(url, fetcher);
     const loading = !data && !error;
     if (!data) return null;
-    const { page, total_pages } = data;
-    const movies = data?.results || [];
+    // const { page, total_pages } = data;
+    const movies = data?.movies || [];
     console.log(movies);
     return (
         <div className="flex flex-col items-center justify-center pb-10 page-container">

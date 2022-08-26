@@ -21,7 +21,7 @@ export function MovieUpload() {
     const [voteAverage, setVoteAverage] = useState("");
     const [movieName, setMovieName] = useState("");
     const [overview, setOverview] = useState("")
-    
+    const [youTubeId, setYouTubeId] = useState("");
 
 
     var state = {
@@ -156,9 +156,11 @@ export function MovieUpload() {
             title: movieName,
             release_date: releaseDate,
             vote_average: voteAverage,
+            overview: overview,
             backdrop_path: newId + "_backdrop_path.jpeg",
             poster_path: newId + "_poster_path.jpeg",
-            genre: ["Action", "Horror"]
+            genre: ["Action", "Horror"],
+            youtube_id: youTubeId
         }).then(res => {
             console.log(res);
         }).catch(err => {
@@ -200,6 +202,11 @@ export function MovieUpload() {
             </div>
 
             <div>
+                <span>Youtube Id: </span>
+                <input style={{color: "black"}} type="text" name="movieName" onChange={e => setYouTubeId(e.target.value)} placeholder="Youtube Id"></input>
+            </div>
+
+            <div>
                 <span>Release Date: </span>
                 <input style={{color: "black"}} type="text" name="movieName" onChange={e => setReleaseDate(e.target.value)} placeholder="release date"></input>
             </div>
@@ -214,6 +221,8 @@ export function MovieUpload() {
                 {/* // ***********  JPEG FILE ONLY *********** */}
                 <input type="file" onChange={updatePosterPath} ></input>
             </div>
+
+            
 
             <div>
                 <span>Movie Backgrop: </span>
