@@ -22,15 +22,14 @@ export function SignUpForm(){
 
         const nickname = {
             Name: 'custom:us_name',
-            Value: 'Phuc0906'
+            Value: name
         }
 
-        const phonenumber = {
-            Name: "custom:phone_number",
-            Value: "0917600202"
-        }
+        
 
+        
         attributesList.push(new CognitoUserAttribute(usRole));
+        attributesList.push(new CognitoUserAttribute(nickname));
         
         if(email.indexOf("@") !== -1 && password !== "" && name !== "") {
             UserPool.signUp(email, password, attributesList, null, (err, data) => {
@@ -50,22 +49,17 @@ export function SignUpForm(){
 
             <div>
                 <label class="formLabel" htmlFor="name">Name</label>
-                <input value={name} required onChange={(e) => {setName(e.target.value)}}></input>
-            </div>
-
-            <div>
-                <label class="formLabel" htmlFor="phoneNumber">Phone Number</label>
-                <input type="number" value={phoneNumber} onChange={(e) => {setPhoneNumber(e.target.value)}}></input>
+                <input style={{color: "black"}} value={name} required onChange={(e) => {setName(e.target.value)}}></input>
             </div>
             
             <div>
                 <label class="formLabel" htmlFor="email">Email</label>
-                <input value={email} required onChange={(e) => {setEmail(e.target.value)}}></input>
+                <input style={{color: "black"}} value={email} required onChange={(e) => {setEmail(e.target.value)}}></input>
             </div>
             
             <div>
                 <label class="formLabel" htmlFor="password">Password</label>
-                <input value={password}  required type={showPassword? "text":"password"} onChange={(e) => {setPassword(e.target.value)}}></input>
+                <input style={{color: "black"}} value={password}  required type={showPassword? "text":"password"} onChange={(e) => {setPassword(e.target.value)}}></input>
                 <button type="button" className="view-img" onClick={() => setShow(!showPassword)}><i className={showPassword ? "bi bi-eye-fill" : "bi bi-eye-slash-fill"}></i></button>
             </div>
             

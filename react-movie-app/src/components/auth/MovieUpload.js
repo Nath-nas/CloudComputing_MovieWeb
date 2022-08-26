@@ -100,6 +100,7 @@ export function MovieUpload() {
             }
         }
 
+        
 
         // calling upload api
         // Upload image to s3
@@ -118,6 +119,7 @@ export function MovieUpload() {
             movie_id: '6',
             title: movie,
             genre: "Action"
+            
         }).then(res => {
             console.log(res);
         }).catch(err => {
@@ -125,6 +127,8 @@ export function MovieUpload() {
         })
 
     }
+
+    
 
     useEffect(() => {
 
