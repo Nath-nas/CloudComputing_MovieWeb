@@ -86,7 +86,7 @@ export function MovieUpload() {
         // package data for sending
         const formData = new FormData();
         console.log(oriFile)
-        formData.append("testing-pic.jpeg", file64);
+        formData.append(id + ".jpeg", file64);
         
         const option = {
             headers: {
@@ -100,6 +100,7 @@ export function MovieUpload() {
             }
         }
 
+        
 
         // calling upload api
         // Upload image to s3
@@ -118,6 +119,7 @@ export function MovieUpload() {
             movie_id: '6',
             title: movie,
             genre: "Action"
+            
         }).then(res => {
             console.log(res);
         }).catch(err => {
@@ -126,10 +128,13 @@ export function MovieUpload() {
 
     }
 
+    
+    
+
     useEffect(() => {
 
         // get movie from dynamoDB
-        axios.get('https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo').then(res => {
+        axios.get('https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/getnewid').then(res => {
             console.log(res);
         }).catch(err => {
             console.log(err)
@@ -139,6 +144,10 @@ export function MovieUpload() {
     // modify UI below
     return (
         <div>
+            <div>
+                <span>Movie Id: </span>
+                <input type="text" name="movieName" onChange={settingMovieInfor} placeholder="id" ></input>
+            </div>
             <div>
                 <span>Movie Name: </span>
                 <input type="text" name="movieName" onChange={settingMovieInfor} placeholder="movie"></input>
