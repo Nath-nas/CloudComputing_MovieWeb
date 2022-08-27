@@ -18,7 +18,7 @@ const App = () => {
         <Fragment>
             <AuthProvider>
                 <Routes>
-                    <Route path="/login" element={<LogIn />} />
+                    <Route path="/" element={<LogIn />} />
                     <Route path="/signUp" element={<SignUp />} />
                     <Route
                         path="/finishedSignUp"
@@ -26,7 +26,7 @@ const App = () => {
                     />
                     <Route element={<Main></Main>}>
                         <Route
-                            path="/"
+                            path="/home"
                             element={
                                 <>
                                     <HomePage></HomePage>

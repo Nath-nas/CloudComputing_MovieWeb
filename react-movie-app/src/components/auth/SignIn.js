@@ -10,7 +10,7 @@ export function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const { authicate } = useAuth;
+    const { authicate } = useAuth();
 
     const onSubmit = (e) => {
         e.preventDefault();

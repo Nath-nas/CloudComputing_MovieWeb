@@ -27,6 +27,52 @@ function AuthProvider(props) {
         }
     };
 
+    const getName = async () => {
+        return await new Promise((resolve, reject) => {
+            const user = UserPool.getCurrentUser();
+
+            if (user) {
+                user.getSession((err, session) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(attributes[2].Value);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    const getEmail = async () => {
+        return await new Promise((resolve, reject) => {
+            const user = UserPool.getCurrentUser();
+
+            if (user) {
+                user.getSession((err, session) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(attributes[4].Value);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
     const getRole = async () => {
         return await new Promise((resolve, reject) => {
             const user = UserPool.getCurrentUser();
@@ -37,10 +83,11 @@ function AuthProvider(props) {
                         reject(err);
                     } else {
                         user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
                             if (err) {
                                 reject(err);
                             } else {
-                                resolve(attributes[2].Value);
+                                resolve(attributes[3].Value);
                             }
                         });
                     }
@@ -78,7 +125,7 @@ function AuthProvider(props) {
             });
         });
     };
-    const value = { getSession, logOut, authicate, getRole };
+    const value = { getSession, logOut, authicate, getRole, getName, getEmail };
     return (
         <AuthContext.Provider value={value} {...props}></AuthContext.Provider>
     );
