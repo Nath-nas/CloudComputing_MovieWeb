@@ -7,10 +7,9 @@ const UploadPage = () => {
         base64URL: "",
     };
 
-    const [file64, setFile] = useState();
-    const [oriFile, setOri] = useState();
-    const [up_stat, setUp] = useState("Pending");
-    const [progessPercent, setProgess] = useState();
+    
+    
+    
     const [newId, setNewId] = useState("");
     const [releaseDate, setReleaseDate] = useState("");
     const [voteAverage, setVoteAverage] = useState("");
@@ -54,6 +53,25 @@ const UploadPage = () => {
             });
     }
 
+    function updateBackdrop(e) {
+        console.log(e.target.files[0]);
+        let { file } = state;
+
+        file = e.target.files[0];
+
+        // convert normal file to base64 file to upload
+        getBase64(file)
+            .then((result) => {
+                file["base64"] = result;
+                // console.log("File Is", file);
+                setbackdropPath(result);
+                console.log("file lenght: " + result.length);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
     const getBase64 = (file) => {
         return new Promise((resolve) => {
             let fileInfo;
@@ -76,24 +94,7 @@ const UploadPage = () => {
         });
     };
 
-    function settingImg(e) {
-        console.log(e.target.files[0]);
-        let { file } = state;
-
-        file = e.target.files[0];
-        setOri(e.target.files[0]);
-        // convert normal file to base64 file to upload
-        getBase64(file)
-            .then((result) => {
-                file["base64"] = result;
-                // console.log("File Is", file);
-                setFile(result);
-                console.log("file lenght: " + result.length);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
+    
 
     function generateGenreArray(e) {
         e.preventDefault();
@@ -117,15 +118,7 @@ const UploadPage = () => {
         const posterData = new FormData();
         posterData.append(newId + "_poster_path.jpeg", posterPath);
 
-        const option = {
-            headers: {},
-            onUploadProgress: (progressEvent) => {
-                const { loaded, total } = progressEvent;
-                let percent = Math.floor(loaded / 100 / total);
-                setProgess(percent);
-                console.log(percent);
-            },
-        };
+        
 
         // calling upload api
         // Upload image to s3
@@ -138,7 +131,7 @@ const UploadPage = () => {
                 console.log(res);
             })
             .catch((err) => {
-                setUp("Error");
+                
                 console.log(err);
             });
 
@@ -151,7 +144,7 @@ const UploadPage = () => {
                 console.log(res);
             })
             .catch((err) => {
-                setUp("Error");
+                
                 console.log(err);
             });
 
@@ -253,7 +246,7 @@ const UploadPage = () => {
                             type="file"
                             className="p-2 border rounded-lg outline-none bg-slate-800 focus:border-primary"
                             id="Dropback_path"
-                            onChange={(e) => updateImagePath(e)}
+                            onChange={(e) => updateBackdrop(e)}
                         />
                     </div>
                 </div>

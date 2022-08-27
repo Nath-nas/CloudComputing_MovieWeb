@@ -28,6 +28,52 @@ function Account(props) {
         }
     };
 
+    const getName = async () => {
+        return await new Promise((resolve, reject) => {
+            const user = UserPool.getCurrentUser();
+
+            if (user) {
+                user.getSession((err, session) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(attributes[2].Value);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    const getEmail = async () => {
+        return await new Promise((resolve, reject) => {
+            const user = UserPool.getCurrentUser();
+
+            if (user) {
+                user.getSession((err, session) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(attributes[3].Value);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
     const getRole = async () => {
         return await new Promise((resolve, reject) => {
             const user = UserPool.getCurrentUser();
@@ -38,10 +84,11 @@ function Account(props) {
                         reject(err);
                     } else {
                         user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
                             if (err) {
                                 reject(err);
                             } else {
-                                resolve(attributes[2].Value);
+                                resolve(attributes[3].Value);
                             }
                         });
                     }
@@ -82,7 +129,7 @@ function Account(props) {
 
     return (
         <AccountContext.Provider
-            value={{ authicate, getSession, logOut, getRole }}>
+            value={{ authicate, getSession, logOut, getRole, getName, getEmail }}>
             {props.children}
         </AccountContext.Provider>
     );

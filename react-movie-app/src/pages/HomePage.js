@@ -1,5 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import MovieList from "../components/movies/MovieList";
+import { AccountContext } from "../contexts/AccountContext";
 
 const HomePage = () => {
     return (
@@ -23,7 +24,9 @@ const HomePage = () => {
                     Trending
                 </h2>
                 <MovieList type={"popular"}></MovieList>
+                
             </section>
+           
         </Fragment>
     );
 };
