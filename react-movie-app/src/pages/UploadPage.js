@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 const UploadPage = () => {
     var state = {
@@ -7,9 +8,6 @@ const UploadPage = () => {
         base64URL: "",
     };
 
-    
-    
-    
     const [newId, setNewId] = useState("");
     const [releaseDate, setReleaseDate] = useState("");
     const [voteAverage, setVoteAverage] = useState("");
@@ -152,7 +150,7 @@ const UploadPage = () => {
         // build algorithm to generate movie_id
     }
 
-    const handleClick = (e) => {
+    const handleSubmit = (e) => {
         postImg();
         axios
             .post(
@@ -175,6 +173,7 @@ const UploadPage = () => {
             .catch((err) => {
                 console.log(err);
             });
+        window.location.reload();         
     };
 
     return (
@@ -182,7 +181,7 @@ const UploadPage = () => {
             <h2 className="mb-10 text-4xl font-bold text-center">
                 Uploading New Film
             </h2>
-            <form className="p-4 rounded-lg bg-slate-700">
+            <form onSubmit={handleSubmit} className="p-4 rounded-lg bg-slate-700">
                 <div className="flex flex-col gap-2 mb-5">
                     {newId && (
                         <div>
@@ -318,8 +317,7 @@ const UploadPage = () => {
                 </div>
                 <button
                     type="submit"
-                    className="w-full p-3 mt-5 font-semibold rounded-lg bg-primary"
-                    onClick={(e) => handleClick(e)}>
+                    className="w-full p-3 mt-5 font-semibold rounded-lg bg-primary">
                     Submit
                 </button>
             </form>
