@@ -1,10 +1,9 @@
-import { React, createContext } from "react";
+import { createContext, useContext } from "react";
 import UserPool from "../components/auth/UserPool";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 
-const AccountContext = createContext();
-
-function Account(props) {
+const AuthContext = createContext();
+function AuthProvider(props) {
     const getSession = async () => {
         return await new Promise((resolve, reject) => {
             const user = UserPool.getCurrentUser();
@@ -28,6 +27,52 @@ function Account(props) {
         }
     };
 
+    const getName = async () => {
+        return await new Promise((resolve, reject) => {
+            const user = UserPool.getCurrentUser();
+
+            if (user) {
+                user.getSession((err, session) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(attributes[2].Value);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    const getEmail = async () => {
+        return await new Promise((resolve, reject) => {
+            const user = UserPool.getCurrentUser();
+
+            if (user) {
+                user.getSession((err, session) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(attributes[4].Value);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
     const getRole = async () => {
         return await new Promise((resolve, reject) => {
             const user = UserPool.getCurrentUser();
@@ -38,10 +83,11 @@ function Account(props) {
                         reject(err);
                     } else {
                         user.getUserAttributes((err, attributes) => {
+                            console.log(attributes);
                             if (err) {
                                 reject(err);
                             } else {
-                                resolve(attributes[2].Value);
+                                resolve(attributes[3].Value);
                             }
                         });
                     }
@@ -79,13 +125,17 @@ function Account(props) {
             });
         });
     };
-
+    const value = { getSession, logOut, authicate, getRole, getName, getEmail };
     return (
-        <AccountContext.Provider
-            value={{ authicate, getSession, logOut, getRole }}>
-            {props.children}
-        </AccountContext.Provider>
+        <AuthContext.Provider value={value} {...props}></AuthContext.Provider>
     );
 }
 
-export { Account, AccountContext };
+function useAuth() {
+    const context = useContext(AuthContext);
+    if (typeof context === "undefined")
+        throw new Error("useAuth must be use in AuthProvider");
+    return context;
+}
+
+export { useAuth, AuthProvider };

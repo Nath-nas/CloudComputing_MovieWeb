@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import MovieList from "../components/movies/MovieList";
 
 const HomePage = () => {

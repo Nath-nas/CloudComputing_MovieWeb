@@ -5,10 +5,10 @@ import useSWR from "swr";
 import { api_key, fetcher } from "../../config";
 const MovieList = ({ type }) => {
     const { data } = useSWR(
-        `https://api.themoviedb.org/3/movie/${type}?api_key=${api_key}`,
+        `https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo`,
         fetcher
     );
-    const movies = data?.results || [];
+    const movies = data?.movies || [];
     console.log(movies);
     return (
         <div className="movie-list">
