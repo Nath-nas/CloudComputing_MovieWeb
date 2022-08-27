@@ -151,6 +151,12 @@ const UploadPage = () => {
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault();
+        if(!releaseDate || !movieName || !overview || !youTubeId || !voteAverage 
+            || !posterPath || !backdropPath) {
+                alert('Missing input!!!');
+                return;    
+            }
         postImg();
         axios
             .post(
@@ -168,12 +174,12 @@ const UploadPage = () => {
                 }
             )
             .then((res) => {
-                console.log(res);
+                alert('Upload new film successed');
+                window.location.reload();  
             })
             .catch((err) => {
                 console.log(err);
-            });
-        window.location.reload();         
+            });       
     };
 
     return (
