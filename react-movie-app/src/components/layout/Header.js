@@ -1,6 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 const Header = () => {
+    const val = useAuth();
+    console.log(val);
     return (
         <header className="flex items-center justify-center p-4 mb-4 text-white header gap-x-4">
             <NavLink
