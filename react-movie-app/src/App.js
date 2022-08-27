@@ -16,7 +16,6 @@ const App = () => {
     return (
         <Fragment>
             <Routes>
-                <Route path="/upload" element={<UploadPage />} />
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/finishedSignUp" element={<FinishedSignUp />} />
@@ -34,6 +33,7 @@ const App = () => {
                     <Route
                         path="/movies/:movieID"
                         element={<MovieDetailPage></MovieDetailPage>}></Route>
+                    <Route path="/upload" element={<UploadPage />} />
                 </Route>
             </Routes>
         </Fragment>

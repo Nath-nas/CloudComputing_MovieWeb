@@ -17,6 +17,13 @@ const Header = () => {
                 }>
                 Movies
             </NavLink>
+            <NavLink
+                to={"/upload"}
+                className={({ isActive }) =>
+                    isActive ? "text-primary font-semibold" : "font-semibold"
+                }>
+                Upload
+            </NavLink>
             <span className="cursor-pointer"></span>
         </header>
     );
