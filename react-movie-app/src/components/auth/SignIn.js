@@ -1,15 +1,16 @@
 import React, { useState, useContext } from "react";
-import { AccountContext } from "../../contexts/AccountContext";
+// import { AccountContext } from "../../contexts/AccountContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import UserPool from "./UserPool";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import { useAuth } from "../../contexts/AuthContext";
 
 export function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const { authicate } = useContext(AccountContext);
+    const { authicate } = useAuth;
 
     const onSubmit = (e) => {
         e.preventDefault();

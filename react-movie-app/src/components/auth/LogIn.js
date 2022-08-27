@@ -1,5 +1,6 @@
 import React from "react";
-import  {SignIn}  from "./SignIn";
+import { SignIn } from "./SignIn";
+import { Account } from "../../contexts/AccountContext";
 import { Status } from "./Status";
 
 const LogIn = () => {
