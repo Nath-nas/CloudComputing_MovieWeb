@@ -22,7 +22,7 @@ const Header = () => {
                 className={({ isActive }) =>
                     isActive ? "text-primary font-semibold" : "font-semibold"
                 }
-                to={"/"}>
+                to={"/home"}>
                 Home
             </NavLink>
             <NavLink
