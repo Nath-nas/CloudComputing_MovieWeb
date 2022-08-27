@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
+import axios from "axios";
 import { api_key, fetcher } from "../config";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import { SwiperSlide, Swiper } from "swiper/react";
 import MovieCard from "../components/movies/MovieCard";
 
 // import MovieInfo from "../components/movies/MovieInfo";
 const MovieDetailPage = () => {
+    const { getRole} = useAuth();
+    const [role, setRole] = useState("");
+
+    useEffect(() => {
+        getRole().then((res) => {
+            console.log(res);
+            setRole(res);
+        });
+    }, []);
+
     const { movieID } = useParams();
     const { data } = useSWR(
         `https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/moviedetail?movId=${movieID}`,
         fetcher
     );
+    const deleteMovie = () => {
+        axios.delete('https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/moviedetail?movId=${movieID}')
+    }
     console.log(data)
     if (!data) return null;
     const { title, backdrop_path, poster_path, overview, genre, youtube_id } = data.movie;
@@ -43,14 +58,15 @@ const MovieDetailPage = () => {
                             {item}
                         </span>
                     ))}
+                {role === "Admin" && (
+                <button onClick={() => deleteMovie}>delete</button>   
+            )}  
             </div>
             <p className="italic font-thin mx-auto text-center w-full max-w-[600px] mb-5">
                 {overview}
             </p>
 
             <VideoItem title={title} youtube_id={youtube_id}/>
-            
-            
         </>
     );
 };

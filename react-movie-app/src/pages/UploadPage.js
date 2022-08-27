@@ -92,7 +92,6 @@ const UploadPage = () => {
         });
     };
 
-    
 
     function generateGenreArray(e) {
         e.preventDefault();
