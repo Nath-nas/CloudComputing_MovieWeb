@@ -40,7 +40,7 @@ export function SignUpForm() {
                 }else {
                     console.log(data);
                 }
-            );
+            });
             navigate("/finishedSignUp");
         }
     };
