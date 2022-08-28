@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
 import { api_key, fetcher } from "../config";
+import { ConnectCampaigns } from "aws-sdk";
 
 const UpdatePage = () => {
+    const navigate = useNavigate();
+    const { id } = useParams();
     var state = {
         file: null,
         base64URL: "",
     };
 
-    const { id } = useParams();
     const [newId, setNewId] = useState("");
     const [releaseDate, setReleaseDate] = useState("");
     const [voteAverage, setVoteAverage] = useState("");
@@ -180,12 +182,17 @@ const UpdatePage = () => {
             )
             .then((res) => {
                 alert('Upload new film successed');
-                window.location.reload();  
+                navigate(`/movies/${id}`); 
             })
             .catch((err) => {
+                alert('Upload new film failed');
                 console.log(err);
             });       
     };
+
+    const cancel = (e) => {
+        navigate(`/movies/${id}`); 
+    }
 
     return (
         <div className="w-full max-w-[600px] mx-auto p-5">
@@ -331,11 +338,19 @@ const UpdatePage = () => {
                         />
                     </div>
                 </div>
-                <button
-                    type="submit"
-                    className="w-full p-3 mt-5 font-semibold rounded-lg bg-primary">
-                    Submit
-                </button>
+                <div> 
+                    <button
+                        type="submit"
+                        className="w-full p-3 mt-5 font-semibold rounded-lg bg-primary">
+                        Submit
+                    </button>
+                    <button
+                        type="button"
+                        onClick={()=>cancel()}
+                        className="w-full p-3 mt-5 font-semibold rounded-lg bg-primary">
+                        Cancel 
+                    </button>    
+                </div>
             </form>
         </div>
     );

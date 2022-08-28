@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { AccountContext } from "../../contexts/AccountContext";
+import { AccountContext } from "../../contexts/AuthContext";
 import { useAuth } from "../../contexts/AuthContext";
 
 export function Status() {
