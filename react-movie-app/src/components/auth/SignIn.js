@@ -29,9 +29,11 @@ export function SignIn() {
         <div className="pt-[100px]">
             <h1 className="mb-5 text-4xl font-semibold text-center"> Login</h1>
             <form onSubmit={onSubmit} className="w-full max-w-[600px] mx-auto">
-                <div className="flex flex-col w-[250px] gap-2 mx-auto">
+                <div className="flex flex-col w-[300px] gap-2 mx-auto">
                     <div className="flex items-center">
-                        <label className="font" htmlFor="email">
+                        <label
+                            className="text-xl font-semibold"
+                            htmlFor="email">
                             Email
                         </label>
                         <input
@@ -43,7 +45,9 @@ export function SignIn() {
                             }}></input>
                     </div>
                     <div className="flex items-center">
-                        <label class="formLabel" htmlFor="password">
+                        <label
+                            className="text-xl font-semibold"
+                            htmlFor="password">
                             Password
                         </label>
                         <input

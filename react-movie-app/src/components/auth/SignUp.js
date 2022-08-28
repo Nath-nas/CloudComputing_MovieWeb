@@ -51,7 +51,7 @@ export function SignUpForm() {
     };
 
     return (
-        <form className="w-full mx-auto loginBox max-w-[600px] p-5">
+        <form className="w-full mx-auto loginBox max-w-[600px] py-[100px]">
             <h1 className="mb-10 text-4xl font-bold text-center announcementLabel">
                 {" "}
                 Registration
