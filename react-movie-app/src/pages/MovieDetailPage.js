@@ -4,6 +4,7 @@ import axios from "axios";
 import { api_key, fetcher } from "../config";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { SwiperSlide, Swiper } from "swiper/react";
 import MovieCard from "../components/movies/MovieCard";
 
@@ -11,6 +12,7 @@ import MovieCard from "../components/movies/MovieCard";
 const MovieDetailPage = () => {
     const { getRole} = useAuth();
     const [role, setRole] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         getRole().then((res) => {
@@ -25,7 +27,18 @@ const MovieDetailPage = () => {
         fetcher
     );
     const deleteMovie = () => {
-        axios.delete('https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/moviedetail?movId=${movieID}')
+        axios.delete(`https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo?movId=${movieID}`).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+
+        navigate(`/home`)
+        
+    }
+
+    const toUpdatePage = () => {
+        navigate(`/update/${movieID}`)
     }
     console.log(data)
     if (!data) return null;
@@ -59,8 +72,17 @@ const MovieDetailPage = () => {
                         </span>
                     ))}
                 {role === "Admin" && (
-                <button onClick={() => deleteMovie}>delete</button>   
-            )}  
+                    
+                <button onClick={deleteMovie}>delete</button> 
+                  
+                )}  
+
+                {role === "Admin" && (
+                    
+                <button onClick={toUpdatePage}>Update</button> 
+                
+                )}  
+
             </div>
             <p className="italic font-thin mx-auto text-center w-full max-w-[600px] mb-5">
                 {overview}

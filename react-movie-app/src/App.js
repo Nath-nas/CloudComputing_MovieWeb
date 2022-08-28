@@ -11,6 +11,7 @@ import MovieDetailPage from "./pages/MovieDetailPage";
 import MoviePage from "./pages/MoviePage";
 import UploadPage from "./pages/UploadPage";
 import { AuthProvider } from "./contexts/AuthContext";
+import  UpdatePage  from "./pages/UpdatePage"
 
 //https://api.themoviedb.org/3/movie/now_playing?api_key=<<744d8cc0b08621bc75b1dbffe80f9214>>&language=en-US&page=1
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
             <AuthProvider>
                 <Routes>
                     <Route path="/" element={<LogIn />} />
+                    <Route path="/update/:id" element={<UpdatePage />}/>
                     <Route path="/signUp" element={<SignUp />} />
                     <Route
                         path="/finishedSignUp"

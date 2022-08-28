@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { AccountContext } from "../../contexts/AccountContext";
 import { useAuth } from "../../contexts/AuthContext";
 
 export function Status() {
@@ -19,5 +20,7 @@ export function Status() {
                 setIsAdmin(true);
             }
         });
+
+        
     }, [getRole, getSession]);
 }
