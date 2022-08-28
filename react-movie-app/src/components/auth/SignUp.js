@@ -21,9 +21,9 @@ export function SignUpForm() {
         };
 
         const nickname = {
-            Name: 'custom:us_name',
-            Value: name
-        }
+            Name: "custom:us_name",
+            Value: "Phuc0906",
+        };
 
         const phonenumber = {
             Name: "custom:phone_number",
@@ -31,16 +31,21 @@ export function SignUpForm() {
         };
 
         attributesList.push(new CognitoUserAttribute(usRole));
-        attributesList.push(new CognitoUserAttribute(nickname))
 
-        if(email.indexOf("@") !== -1 && password !== "" && name !== "") {
-            UserPool.signUp(email, password, attributesList, null, (err, data) => {
-                if (err) {
-                    console.log(err);
-                }else {
-                    console.log(data);
+        if (email.indexOf("@") !== -1 && password !== "" && name !== "") {
+            UserPool.signUp(
+                email,
+                password,
+                attributesList,
+                null,
+                (err, data) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(data);
+                    }
                 }
-            });
+            );
             navigate("/finishedSignUp");
         }
     };
@@ -52,25 +57,66 @@ export function SignUpForm() {
                 Registration
             </h1>
 
-            <div>
-                <label class="formLabel" htmlFor="name">Name</label>
-                <input style={{color: "black"}} value={name} required onChange={(e) => {setName(e.target.value)}}></input>
+            <div className="flex flex-col gap-2 max-w-[300px] justify-center mx-auto">
+                <div className="flex items-center">
+                    <label className="formLabel" htmlFor="name">
+                        Name
+                    </label>
+                    <input
+                        className="ml-auto outline-none bg-slate-800"
+                        value={name}
+                        required
+                        onChange={(e) => {
+                            setName(e.target.value);
+                        }}></input>
+                </div>
+
+                <div className="flex items-center">
+                    <label className="formLabel" htmlFor="phoneNumber">
+                        Phone Number
+                    </label>
+                    <input
+                        className="ml-auto outline-none bg-slate-800"
+                        type="text"
+                        value={phoneNumber}
+                        onChange={(e) => {
+                            setPhoneNumber(e.target.value);
+                        }}></input>
+                </div>
+                <div className="flex items-center">
+                    <label className="formLabel" htmlFor="email">
+                        Email
+                    </label>
+                    <input
+                        className="ml-auto outline-none bg-slate-800"
+                        value={email}
+                        required
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                        }}></input>
+                </div>
+                <div className="flex items-center">
+                    <label className="formLabel" htmlFor="password">
+                        Password
+                    </label>
+                    <input
+                        className="ml-auto outline-none bg-slate-800"
+                        value={password}
+                        required
+                        type={showPassword ? "text" : "password"}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                        }}></input>
+                </div>
             </div>
 
-           
-            
-            <div>
-                <label class="formLabel" htmlFor="email">Email</label>
-                <input style={{color: "black"}} value={email} required onChange={(e) => {setEmail(e.target.value)}}></input>
-            </div>
-            
-            <div>
-                <label class="formLabel" htmlFor="password">Password</label>
-                <input style={{color: "black"}} value={password}  required type={showPassword? "text":"password"} onChange={(e) => {setPassword(e.target.value)}}></input>
-                <button type="button" className="view-img" onClick={() => setShow(!showPassword)}><i className={showPassword ? "bi bi-eye-fill" : "bi bi-eye-slash-fill"}></i></button>
-            </div>
-            
-            <button type="submit" class="signUpLink" onClick={()=>onSubmit()} to={"/finishedSignUp"}><span>Sign Up</span></button>
+            <button
+                type="submit"
+                className="w-full p-3 signUpLink bg-primary max-w-[300px] mx-auto block mt-5 rounded-lg"
+                onClick={() => onSubmit()}
+                to={"/finishedSignUp"}>
+                <span>Sign Up</span>
+            </button>
         </form>
     );
 }
