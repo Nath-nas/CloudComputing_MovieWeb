@@ -26,41 +26,52 @@ export function SignIn() {
     };
 
     return (
-        <div className="w-full max-w-[600px] mx-auto">
-            <h1 className="text-xl font-semibold"> Sign In</h1>
-            <form onSubmit={onSubmit}>
-                <div>
-                    <label className="font" htmlFor="email">
-                        Email
-                    </label>
-                    <input
-                        className="ml-auto outline-none bg-slate-800"
-                        required
-                        value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                        }}></input>
+        <div className="pt-[100px]">
+            <h1 className="mb-5 text-4xl font-semibold text-center"> Login</h1>
+            <form onSubmit={onSubmit} className="w-full max-w-[600px] mx-auto">
+                <div className="flex flex-col w-[300px] gap-2 mx-auto">
+                    <div className="flex items-center">
+                        <label
+                            className="text-xl font-semibold"
+                            htmlFor="email">
+                            Email
+                        </label>
+                        <input
+                            className="ml-auto outline-none bg-slate-800"
+                            required
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                            }}></input>
+                    </div>
+                    <div className="flex items-center">
+                        <label
+                            className="text-xl font-semibold"
+                            htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            className="ml-auto outline-none bg-slate-800"
+                            required
+                            type={"password"}
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}></input>
+                    </div>
+                    <div className="flex items-center justify-center mt-5 gap-x-4 ">
+                        <button
+                            className="px-5 py-2 transition-all border border-white rounded-lg hover:text-primary hover:border-primary"
+                            type="submit">
+                            Sign In{" "}
+                        </button>
+                        <Link
+                            className="px-5 py-2 transition-all border border-white rounded-lg hover:text-primary hover:border-primary"
+                            to={"/signUp"}>
+                            Sign Up
+                        </Link>
+                    </div>
                 </div>
-
-                <div>
-                    <label class="formLabel" htmlFor="password">
-                        Password
-                    </label>
-                    <input
-                        className="outline-none bg-slate-800"
-                        required
-                        type={"password"}
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}></input>
-                </div>
-                <button class="submitBtn" type="submit">
-                    Sign In{" "}
-                </button>
-                <Link class="signUpLink" to={"/signUp"}>
-                    <span>Sign Up </span>
-                </Link>
             </form>
         </div>
     );

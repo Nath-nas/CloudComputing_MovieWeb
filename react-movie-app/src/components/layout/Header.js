@@ -20,13 +20,15 @@ const Header = () => {
         getEmail().then((res) => {
             setEmail(res);
         });
-    }, []);
+    }, [getEmail, getName, getRole]);
 
     return (
-        <header className="flex items-center justify-center p-4 mb-4 text-white header gap-x-4 page-container">
+        <header className="flex items-center justify-center px-[120px] py-4 mb-4 text-white header gap-x-4">
             <NavLink
                 className={({ isActive }) =>
-                    isActive ? "text-primary font-semibold" : "font-semibold"
+                    isActive
+                        ? "text-primary text-xl font-semibold select-none"
+                        : "font-semibold text-xl select-none"
                 }
                 to={"/home"}>
                 Home
@@ -34,7 +36,9 @@ const Header = () => {
             <NavLink
                 to={"/movies"}
                 className={({ isActive }) =>
-                    isActive ? "text-primary font-semibold" : "font-semibold"
+                    isActive
+                        ? "text-primary text-xl font-semibold select-none"
+                        : "font-semibold text-xl select-none"
                 }>
                 Movies
             </NavLink>
@@ -43,22 +47,13 @@ const Header = () => {
                     to={"/upload"}
                     className={({ isActive }) =>
                         isActive
-                            ? "text-primary font-semibold"
-                            : "font-semibold"
+                            ? "text-primary text-xl font-semibold select-none"
+                            : "font-semibold text-xl select-none"
                     }>
                     Upload
                 </NavLink>
             )}
-            <span className="cursor-pointer"></span>
-            <div className="relative flex items-center gap-3 ml-auto">
-                <img
-                    src="https://images.unsplash.com/photo-1661473677794-d3040f0e8dbf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60"
-                    alt=""
-                    className="object-cover w-8 h-8 rounded-full select-none"
-                />
-                <span className="text-xl font-thin select-none">
-                    {userName}
-                </span>
+            <div className="relative ml-auto">
                 <span
                     onClick={() => setState(!state)}
                     className="transition-all hover:text-primary">
@@ -82,7 +77,24 @@ const Header = () => {
                     </svg>
                 </span>
                 {state && (
-                    <div className="absolute top-[100%]  translate-y-3 z-10 flex flex-col gap-2 p-3 bg-slate-700 rounded-lg">
+                    <div className="absolute top-[100%] left-[100%] -translate-x-[100%]  translate-y-3 z-10 flex flex-col gap-2 p-3 bg-slate-700 rounded-lg">
+                        <div className="flex items-center gap-x-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-6 h-6">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                            </svg>
+
+                            <span className="select-none">{userName}</span>
+                        </div>
                         <div className="flex items-center transition-all gap-x-2 hover:text-primary">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
