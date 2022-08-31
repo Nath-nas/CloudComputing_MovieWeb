@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
-import { api_key, fetcher } from "../config";
-import { ConnectCampaigns } from "aws-sdk";
+import { fetcher } from "../config";
+// import { ConnectCampaigns } from "aws-sdk";
 
 const UpdatePage = () => {
     const navigate = useNavigate();
@@ -27,17 +27,16 @@ const UpdatePage = () => {
         fetcher
     );
 
-    
     useEffect(() => {
         const mov = data.movie;
-        setNewId(id)
+        setNewId(id);
         setReleaseDate(mov.release_date);
-        setVoteAverage(mov.vote_average)
-        setMovieName(mov.title)
-        setOverview(mov.overview)
-        setYouTubeId(mov.youtube_id)
-        setbackdropPath(mov.backdrop_path)
-        setposterPath(mov.poster_path)
+        setVoteAverage(mov.vote_average);
+        setMovieName(mov.title);
+        setOverview(mov.overview);
+        setYouTubeId(mov.youtube_id);
+        setbackdropPath(mov.backdrop_path);
+        setposterPath(mov.poster_path);
     }, []);
 
     function updateImagePath(e) {
@@ -100,7 +99,6 @@ const UpdatePage = () => {
         });
     };
 
-
     function generateGenreArray(e) {
         e.preventDefault();
         const genreField = document.querySelectorAll(".genre-field");
@@ -123,8 +121,6 @@ const UpdatePage = () => {
         const posterData = new FormData();
         posterData.append(newId + "_poster_path.jpeg", posterPath);
 
-        
-
         // calling upload api
         // Upload image to s3
         axios
@@ -136,7 +132,6 @@ const UpdatePage = () => {
                 console.log(res);
             })
             .catch((err) => {
-                
                 console.log(err);
             });
 
@@ -149,7 +144,6 @@ const UpdatePage = () => {
                 console.log(res);
             })
             .catch((err) => {
-                
                 console.log(err);
             });
 
@@ -159,11 +153,18 @@ const UpdatePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!releaseDate || !movieName || !overview || !youTubeId || !voteAverage 
-            || !posterPath || !backdropPath) {
-                alert('Missing input!!!');
-                return;    
-            }
+        if (
+            !releaseDate ||
+            !movieName ||
+            !overview ||
+            !youTubeId ||
+            !voteAverage ||
+            !posterPath ||
+            !backdropPath
+        ) {
+            alert("Missing input!!!");
+            return;
+        }
         postImg();
         axios
             .post(
@@ -181,29 +182,31 @@ const UpdatePage = () => {
                 }
             )
             .then((res) => {
-                alert('Upload new film successed');
-                navigate(`/movies/${id}`); 
+                alert("Upload new film successed");
+                navigate(`/movies/${id}`);
             })
             .catch((err) => {
-                alert('Upload new film failed');
+                alert("Upload new film failed");
                 console.log(err);
-            });       
+            });
     };
 
     const cancel = (e) => {
-        navigate(`/movies/${id}`); 
-    }
+        navigate(`/movies/${id}`);
+    };
 
     return (
         <div className="w-full max-w-[600px] mx-auto p-5">
             <h2 className="mb-10 text-4xl font-bold text-center">
                 Uploading New Film
             </h2>
-            <form onSubmit={handleSubmit} className="p-4 rounded-lg bg-slate-700">
+            <form
+                onSubmit={handleSubmit}
+                className="p-4 rounded-lg bg-slate-700">
                 <div className="flex flex-col gap-2 mb-5">
                     {newId && (
                         <div>
-                            <span className="font-semibold text-xl">
+                            <span className="text-xl font-semibold">
                                 ID: {newId}
                             </span>
                         </div>
@@ -338,7 +341,7 @@ const UpdatePage = () => {
                         />
                     </div>
                 </div>
-                <div> 
+                <div>
                     <button
                         type="submit"
                         className="w-full p-3 mt-5 font-semibold rounded-lg bg-primary">
@@ -346,10 +349,10 @@ const UpdatePage = () => {
                     </button>
                     <button
                         type="button"
-                        onClick={()=>cancel()}
+                        onClick={() => cancel()}
                         className="w-full p-3 mt-5 font-semibold rounded-lg bg-primary">
-                        Cancel 
-                    </button>    
+                        Cancel
+                    </button>
                 </div>
             </form>
         </div>

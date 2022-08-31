@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 
 const UploadPage = () => {
     var state = {
@@ -92,7 +91,6 @@ const UploadPage = () => {
         });
     };
 
-
     function generateGenreArray(e) {
         e.preventDefault();
         const genreField = document.querySelectorAll(".genre-field");
@@ -115,8 +113,6 @@ const UploadPage = () => {
         const posterData = new FormData();
         posterData.append(newId + "_poster_path.jpeg", posterPath);
 
-        
-
         // calling upload api
         // Upload image to s3
         axios
@@ -128,7 +124,6 @@ const UploadPage = () => {
                 console.log(res);
             })
             .catch((err) => {
-                
                 console.log(err);
             });
 
@@ -141,7 +136,6 @@ const UploadPage = () => {
                 console.log(res);
             })
             .catch((err) => {
-                
                 console.log(err);
             });
 
@@ -151,11 +145,18 @@ const UploadPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!releaseDate || !movieName || !overview || !youTubeId || !voteAverage 
-            || !posterPath || !backdropPath) {
-                alert('Missing input!!!');
-                return;    
-            }
+        if (
+            !releaseDate ||
+            !movieName ||
+            !overview ||
+            !youTubeId ||
+            !voteAverage ||
+            !posterPath ||
+            !backdropPath
+        ) {
+            alert("Missing input!!!");
+            return;
+        }
         postImg();
         axios
             .post(
@@ -173,12 +174,12 @@ const UploadPage = () => {
                 }
             )
             .then((res) => {
-                alert('Upload new film successed');
-                window.location.reload();  
+                alert("Upload new film successed");
+                window.location.reload();
             })
             .catch((err) => {
                 console.log(err);
-            });       
+            });
     };
 
     return (
@@ -186,11 +187,13 @@ const UploadPage = () => {
             <h2 className="mb-10 text-4xl font-bold text-center">
                 Uploading New Film
             </h2>
-            <form onSubmit={handleSubmit} className="p-4 rounded-lg bg-slate-700">
+            <form
+                onSubmit={handleSubmit}
+                className="p-4 rounded-lg bg-slate-700">
                 <div className="flex flex-col gap-2 mb-5">
                     {newId && (
                         <div>
-                            <span className="font-semibold text-xl">
+                            <span className="text-xl font-semibold">
                                 ID: {newId}
                             </span>
                         </div>

@@ -10,7 +10,7 @@ import MovieCard from "../components/movies/MovieCard";
 
 // import MovieInfo from "../components/movies/MovieInfo";
 const MovieDetailPage = () => {
-    const { getRole} = useAuth();
+    const { getRole } = useAuth();
     const [role, setRole] = useState("");
     const navigate = useNavigate();
 
@@ -27,22 +27,27 @@ const MovieDetailPage = () => {
         fetcher
     );
     const deleteMovie = () => {
-        axios.delete(`https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo?movId=${movieID}`).then(res => {
-            console.log(res);
-        }).catch(err => {
-            console.log(err);
-        });
+        axios
+            .delete(
+                `https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo?movId=${movieID}`
+            )
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 
-        navigate(`/home`)
-        
-    }
+        navigate(`/home`);
+    };
 
     const toUpdatePage = () => {
-        navigate(`/update/${movieID}`)
-    }
-    console.log(data)
+        navigate(`/update/${movieID}`);
+    };
+    console.log(data);
     if (!data) return null;
-    const { title, backdrop_path, poster_path, overview, genre, youtube_id } = data.movie;
+    const { title, backdrop_path, poster_path, overview, genre, youtube_id } =
+        data.movie;
     return (
         <>
             <div className="w-full h-[600px] relative -mt-[72px] -z-10">
@@ -62,7 +67,7 @@ const MovieDetailPage = () => {
                 />
             </div>
             <h1 className="mb-6 text-4xl font-bold text-center">{title}</h1>
-            <div className="flex items-center justify-center mb-10 gap-x-5">
+            <div className="flex items-center justify-center mb-5 gap-x-5">
                 {genre.length > 0 &&
                     genre.map((item) => (
                         <span
@@ -71,36 +76,37 @@ const MovieDetailPage = () => {
                             {item}
                         </span>
                     ))}
-                {role === "Admin" && (
-                    
-                <button onClick={deleteMovie}>delete</button> 
-                  
-                )}  
-
-                {role === "Admin" && (
-                    
-                <button onClick={toUpdatePage}>Update</button> 
-                
-                )}  
-
             </div>
+            {role === "Admin" && (
+                <div className="flex items-center justify-center gap-3 mb-5">
+                    <button
+                        className="px-4 py-2 transition-all border border-white rounded-lg hover:text-purple-600 hover:border-purple-600"
+                        onClick={deleteMovie}>
+                        delete
+                    </button>
+                    <button
+                        className="px-4 py-2 transition-all border border-white rounded-lg hover:text-purple-600 hover:border-purple-600"
+                        onClick={toUpdatePage}>
+                        Update
+                    </button>
+                </div>
+            )}
             <p className="italic font-thin mx-auto text-center w-full max-w-[600px] mb-5">
                 {overview}
             </p>
 
-            <VideoItem title={title} youtube_id={youtube_id}/>
+            <VideoItem title={title} youtube_id={youtube_id} />
         </>
     );
 };
 
-
 const VideoItem = (props) => {
-    
-
     return (
         <div className="flex flex-col items-center justify-center gap-10 mb-12 ">
-            <div className="flex flex-col gap-2" >
-                <h3 className="text-3xl font-semibold">{props.title} Official Trailer</h3>
+            <div className="flex flex-col gap-2">
+                <h3 className="text-3xl font-semibold">
+                    {props.title} Official Trailer
+                </h3>
                 <div className="aspect-video">
                     <iframe
                         width="1166"
@@ -116,7 +122,5 @@ const VideoItem = (props) => {
         </div>
     );
 };
-
-
 
 export default MovieDetailPage;
