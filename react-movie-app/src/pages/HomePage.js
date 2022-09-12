@@ -1,7 +1,19 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import MovieList from "../components/movies/MovieList";
-
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 const HomePage = () => {
+
+    const {getSession} = useAuth();
+    const navigate = useNavigate();
+    useEffect(() => {
+        getSession().then(res => {
+
+        }).catch(err => {
+            navigate('/')
+        })
+    })
+
     return (
         <Fragment>
             <section className="mb-10 movies-layout page-container">

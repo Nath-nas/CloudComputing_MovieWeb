@@ -16,6 +16,8 @@ function AuthProvider(props) {
                         resolve(session);
                     }
                 });
+            }else {
+                reject();
             }
         });
     };

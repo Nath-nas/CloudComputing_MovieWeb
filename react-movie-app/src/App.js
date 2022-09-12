@@ -17,7 +17,7 @@ import  UpdatePage  from "./pages/UpdatePage"
 const App = () => {
     return (
         <Fragment>
-            <AuthProvider>
+            
                 <Routes>
                     <Route path="/" element={<LogIn />} />
                     <Route path="/update/:id" element={<UpdatePage />}/>
@@ -45,7 +45,7 @@ const App = () => {
                         <Route path="/upload" element={<UploadPage />} />
                     </Route>
                 </Routes>
-            </AuthProvider>
+            
         </Fragment>
     );
 };
