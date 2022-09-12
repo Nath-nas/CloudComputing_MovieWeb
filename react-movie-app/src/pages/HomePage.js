@@ -12,7 +12,7 @@ const HomePage = () => {
         }).catch(err => {
             navigate('/')
         })
-    })
+    }, [])
 
     return (
         <Fragment>
