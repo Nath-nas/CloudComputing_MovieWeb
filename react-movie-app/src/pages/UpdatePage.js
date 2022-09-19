@@ -165,9 +165,8 @@ const UpdatePage = () => {
             alert("Missing input!!!");
             return;
         }
-        postImg();
         axios
-            .post(
+            .patch(
                 "https://6pjh74t9n3.execute-api.ap-southeast-1.amazonaws.com/movie/movieinfo",
                 {
                     id: String(newId),
@@ -175,9 +174,6 @@ const UpdatePage = () => {
                     release_date: releaseDate,
                     vote_average: voteAverage,
                     overview: overview,
-                    backdrop_path: newId + "_backdrop_path.jpeg",
-                    poster_path: newId + "_poster_path.jpeg",
-                    genre: generateGenreArray(e),
                     youtube_id: youTubeId,
                 }
             )
